@@ -5,7 +5,7 @@
 import { Card, Col, Button } from 'antd';
 
 // Iteration 2
-function FoodBox(props) {
+function foodBox(props) {
   return (
     <Col>
       <Card
@@ -24,4 +24,4 @@ function FoodBox(props) {
   );
 }
 
-export default FoodBox;
+export default foodBox;
