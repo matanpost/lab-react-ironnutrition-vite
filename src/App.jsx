@@ -19,6 +19,7 @@ function App() {
    const [image, setImage] = useState('')
    const [calories, setCalories] = useState(0)
    const [servings, setServings] = useState(0)
+   const [search, setSearch] = useState('')
   
    const handleSubmit = event => {
     event.preventDefault()
@@ -31,6 +32,13 @@ function App() {
     setCalories(0)
     setServings(0)
  }  
+
+   const deleteFood = id => {
+    let index = foodsState.findIndex(element => element.id === id)
+    let foodStateCopy = [...foodsState]
+    foodStateCopy.splice(index, 1)
+    setfoodState(foodStateCopy)
+  }
 
   return (
     
@@ -57,13 +65,22 @@ function App() {
       <Button> Hide Form / Add New Food </Button>
 
       {/* Display Search component here */}
+      <label>Search</label>
+      <Input type='text' value={search} onChange={event => setSearch(event.target.value)} />
+       
 
       <Divider>Food List</Divider>
 
       <Row style={{ width: '100%', justifyContent: 'center' }}>
         {/* Render the list of Food Box components here */}
-        {foodsState.map((food) => {
-        return <FoodBox food={food} key={food.id}/>
+        {foodsState
+        .filter(food => {
+          if (search === '') return foodsState
+          return food.name.toLowerCase().includes(search.toLowerCase())
+        })
+        .map((food) => {
+          
+        return <FoodBox deleteFood={deleteFood} food={food} key={food.id}/>
       })}
       </Row>
     </div>
